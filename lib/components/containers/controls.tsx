@@ -35,7 +35,7 @@ export class ControlsBar extends React.PureComponent<ControlsProps & ControlsDis
     }
 
     render() {
-        return (<Row className="center" style={{height:"6rem"}}>
+        return (<Row className="center middle" style={{height:"6rem"}}>
             <Column width="fit" className="pad-large">
                 <Play 
                     size={3}

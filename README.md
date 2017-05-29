@@ -1,4 +1,4 @@
-# AutoDAW
+# Dawesome
 
 An ambitious project to enable computer-aided music production. The idea is
 simple: a computer generates the melody, harmony, drums, etc. (i.e, a MIDI file)
