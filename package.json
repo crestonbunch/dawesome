@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "core-js": "^2.4.1",
+    "d3": "^4.9.1",
+    "react": "^15.5.4",
+    "react-dom": "^15.5.4",
+    "react-redux": "^5.0.5",
+    "redux": "^3.6.0"
+  },
+  "devDependencies": {
+    "css-loader": "^0.28.2",
+    "copy-webpack-plugin": "^4.0.1",
+    "@types/core-js": "^0.9.41",
+    "@types/d3": "^4.9.0",
+    "@types/react": "^15.0.23",
+    "@types/react-dom": "^15.5.0",
+    "@types/react-redux": "^4.4.40",
+    "@types/redux": "^3.6.0",
+    "node-sass": "^4.5.3",
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.4.5",
+    "sass-loader": "^6.0.5",
+    "source-map-loader": "^0.2.1",
+    "style-loader": "^0.18.1",
+    "ts-loader": "^2.0.3",
+    "typescript": "^2.3.3",
+    "uglify-js": "^3.0.11",
+    "uglifyjs-webpack-plugin": "^0.4.3"
+  }
+}

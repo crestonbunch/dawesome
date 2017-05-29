@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "commonjs",
+    "target": "es5",
+    "lib": [
+      "es6",
+      "dom"
+    ],
+    "jsx": "react",
+    "experimentalDecorators": true,
+    "baseUrl": "./",
+    "paths": {
+      "lib/*": [
+        "./lib/*"
+      ],
+      "components/*": [
+        "./lib/components/*"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "files": [
+    "./app/index.tsx"
+  ]
+}

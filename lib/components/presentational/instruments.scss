@@ -1,0 +1,28 @@
+@import '~styles/fonts';
+@import '~styles/colors';
+@import '~styles/sizes';
+
+.instruments.tab.handles {
+
+    font: $font-size-large $font-primary;
+    background: $background-dark;
+
+    .handle {
+    }
+
+    .handle span {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        padding: $padding-large 0;
+        cursor: pointer;
+    }
+
+    .handle span.selected {
+        background: $background-light;
+    }
+}
+
+.instruments.tab.page {
+    background: $background-light;
+}
