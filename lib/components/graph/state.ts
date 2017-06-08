@@ -1,5 +1,8 @@
 import { GraphAction } from "components/graph/actions";
 import { ADD_NODE_ACTION, AddNodeAction } from "components/graph/actions"
+import { START_DRAG_ACTION, StartDragAction } from "components/graph/actions"
+import { STOP_DRAG_ACTION, StopDragAction } from "components/graph/actions"
+import { MOVE_CAMERA_ACTION, MoveCameraAction } from "components/graph/actions"
 import { MOVE_NODE_ACTION, MoveNodeAction } from "components/graph/actions"
 import { TOGGLE_NODE_ACTION, ToggleNodeAction } from "components/graph/actions"
 import { DELETE_NODE_ACTION, DeleteNodeAction } from "components/graph/actions"
@@ -21,7 +24,11 @@ export interface EdgeState {
     id: string;
     graph: string;
     from: string;
+    fromParam: string;
+    fromAnchor: string;
     to: string;
+    toParam: string;
+    toAnchor: string;
     start: {x: number, y: number},
     end: {x: number, y: number},
 }
@@ -33,6 +40,7 @@ export interface AnchorState {
 }
 
 export interface GraphState {
+    dragging: boolean;
     nodes: Map<string, NodeState>;
     anchors: Map<string, AnchorState>;
     edges: Map<string, EdgeState>;
@@ -42,6 +50,7 @@ export interface GraphState {
 function addNode(state: Map<string, GraphState>, action: AddNodeAction): Map<string, GraphState> {
     if (!state.has(action.graph)) {
         state.set(action.graph, { 
+            dragging: false,
             nodes: new Map<string, NodeState>(), 
             anchors: new Map<string, AnchorState>(), 
             edges: new Map<string, EdgeState>(),
@@ -59,6 +68,25 @@ function addNode(state: Map<string, GraphState>, action: AddNodeAction): Map<str
 
     state.get(action.graph).nodes = nodes;
 
+    return state;
+}
+
+function startDrag(state: Map<string, GraphState>, action: StartDragAction): Map<string, GraphState> {
+    state.get(action.graph).dragging = true;
+    return state;
+}
+
+function stopDrag(state: Map<string, GraphState>, action: StopDragAction): Map<string, GraphState> {
+    state.get(action.graph).dragging = false;
+    return state;
+}
+
+function moveCamera(state: Map<string, GraphState>, action: MoveCameraAction): Map<string, GraphState> {
+    const camera = {
+        x: state.get(action.graph).camera.x + action.dx,
+        y: state.get(action.graph).camera.y + action.dy
+    }
+    state.get(action.graph).camera = camera;
     return state;
 }
 
@@ -91,7 +119,11 @@ function addEdge(state: Map<string, GraphState>, action: AddEdgeAction): Map<str
         id: action.id,
         graph: action.graph,
         from: action.from,
+        fromParam: action.fromParam,
+        fromAnchor: action.fromAnchor,
         to: action.to,
+        toParam: action.toParam,
+        toAnchor: action.toAnchor,
         start: action.start,
         end: action.end
     });
@@ -156,9 +188,9 @@ function moveAnchor(state: Map<string, GraphState>, action: MoveAnchorAction): M
 
     state.get(action.graph).edges.forEach((state, id) => {
         let edge = {...state};
-        if (state.from === action.id) {
+        if (state.fromAnchor === action.id) {
             edge.start = {x: action.x, y: action.y};
-        } else if (state.to === action.id) {
+        } else if (state.toAnchor === action.id) {
             edge.end = {x: action.x, y: action.y};
         }
         edges.set(id, edge);
@@ -176,9 +208,9 @@ function deleteAnchor(state: Map<string, GraphState>, action: DeleteAnchorAction
     anchors.delete(action.id)
     // delete connected edges
     state.get(action.graph).edges.forEach((state, id) => {
-        if (state.from === action.id) {
+        if (state.fromAnchor === action.id) {
             edges.delete(state.id);
-        } else if (state.to === action.id) {
+        } else if (state.toAnchor === action.id) {
             edges.delete(state.id);
         }
     });
@@ -195,6 +227,12 @@ export default function graphStore(
     switch (action.type) {
         case ADD_NODE_ACTION:
             return addNode(newState, action as AddNodeAction);
+        case START_DRAG_ACTION:
+            return startDrag(newState, action as StartDragAction);
+        case STOP_DRAG_ACTION:
+            return stopDrag(newState, action as StopDragAction);
+        case MOVE_CAMERA_ACTION:
+            return moveCamera(newState, action as MoveCameraAction);
         case MOVE_NODE_ACTION:
             return moveNode(newState, action as MoveNodeAction);
         case TOGGLE_NODE_ACTION:

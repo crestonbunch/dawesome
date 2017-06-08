@@ -6,8 +6,9 @@ export interface InstrumentState {
     name: string;
     input: string;
     output: string;
-    oscillators?: Map<string, Map<number, number>>;
-    gains?: Map<string, number>;
+    oscillators: Map<string, Map<number, number>>;
+    gains: Map<string, number>;
+    numbers: Map<string, number>;
 }
 
 function inputReducer(state = "", action: actions.CreateInstrumentAction): string {

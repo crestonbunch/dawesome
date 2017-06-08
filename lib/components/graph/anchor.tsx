@@ -12,6 +12,8 @@ export interface AnchorProps {
     direction: "in"|"out";
     position: "top"|"middle"|"bottom";
     for: string;
+    param: string;
+    color: "green"|"blue"|"red";
     graph?: string;
     node?: Node;
     dragging?: boolean;
@@ -22,7 +24,11 @@ export interface AnchorProps {
     onConnect?: (
         id: string, 
         from: string, 
+        fromParam: string,
+        fromAnchor: string, 
         to: string, 
+        toParam: string,
+        toAnchor: string, 
         start: {x: number, y: number}, 
         end: {x: number, y: number}
     ) => void;
@@ -41,7 +47,9 @@ const mapDispatch = (dispatch: redux.Dispatch<State>, props: AnchorProps): Ancho
     ...props,
     onDrag: (x, y) => dispatch(dragAnchor(props.graph, props.id, x, y)),
     onRelease: () => dispatch(releaseAnchor(props.graph, props.id)),
-    onConnect: (id, from, to, start, end) => dispatch(addEdge(props.graph, id, from, to, start, end)),
+    onConnect: (id, from, p1, a1, to, p2, a2, start, end) => dispatch(
+        addEdge(props.graph, id, from, p1, a1, to, p2, a2, start, end)
+    ),
     onUpdate: (x, y) => dispatch(moveAnchor(props.graph, props.id, x, y)),
     onDelete: () => dispatch(deleteAnchor(props.graph, props.id)),
 });
@@ -88,18 +96,22 @@ export default class Anchor extends React.PureComponent<AnchorProps, undefined> 
 
     private onDrop(e: React.DragEvent<HTMLDivElement>) {
         const id = Date.now().toString();
-        const from = e.dataTransfer.getData("text/id+anchor");
+        const from = e.dataTransfer.getData("text/for+anchor");
+        const fromParam = e.dataTransfer.getData("text/param+anchor");
+        const fromAnchor = e.dataTransfer.getData("text/anchor+anchor");
         const x = e.dataTransfer.getData("text/x+anchor");
         const y = e.dataTransfer.getData("text/y+anchor");
-        const to = this.props.id;
+        const to = this.props.for;
+        const toParam = this.props.param;
+        const toAnchor = this.props.id;
         const start = {x: parseFloat(x), y: parseFloat(y)};
         const end = this.props.pageToWorld(this.absCenter.x, this.absCenter.y);
-        this.props.onConnect(id, from, to, start, end);
+        this.props.onConnect(id, from, fromParam, fromAnchor, to, toParam, toAnchor, start, end);
     }
 
     private onDragOver(e: React.DragEvent<HTMLDivElement>) {
         if (e.dataTransfer.types.reduce((accum, type) => {
-            return accum || (type == "text/id+anchor");
+            return accum || (type == "text/for+anchor");
         }, false)) {
             // data contains an edge id -- allow drop
             e.preventDefault();
@@ -111,7 +123,9 @@ export default class Anchor extends React.PureComponent<AnchorProps, undefined> 
         const x = e.pageX - box.left;
         const y = e.pageY - box.top;
         const start = this.props.pageToWorld(this.absCenter.x, this.absCenter.y);
-        e.dataTransfer.setData("text/id+anchor", this.props.id);
+        e.dataTransfer.setData("text/for+anchor", this.props.for);
+        e.dataTransfer.setData("text/param+anchor", this.props.param);
+        e.dataTransfer.setData("text/anchor+anchor", this.props.id);
         e.dataTransfer.setData("text/x+anchor", start.x.toString());
         e.dataTransfer.setData("text/y+anchor", start.y.toString());
         this.props.onDrag(x, y);
@@ -136,16 +150,16 @@ export default class Anchor extends React.PureComponent<AnchorProps, undefined> 
         if (this.props.direction === "in") {
             return <div className={"anchor in container " + this.props.position}
                 ref={(ref) => this.ref = ref}
-            ><div className={"anchor in handle"} 
-                ref={(ref) => this.ref = ref}
                 onDrop={(e) => this.onDrop(e)}
                 onDragOver={(e) => this.onDragOver(e)}
+            ><div className={"anchor in handle " + this.props.color} 
+                ref={(ref) => this.ref = ref}
                 />
             </div>
         } else if (this.props.direction === "out") {
             return <div className={"anchor out container " + this.props.position}
                 ref={(ref) => this.ref = ref}
-            ><div className={"anchor out handle"}
+            ><div className={"anchor out handle " + this.props.color}
                 draggable={true}
                 onDragStart={(e) => this.onDragStart(e) } 
                 onDrag={(e) => this.onDrag(e)} 

@@ -9,6 +9,7 @@ import { State, initStore } from "lib/state";
 import { Window } from "components/window";
 import * as Instrument from "components/instrument";
 import * as Controls from "components/controls";
+import { default as AudioManager } from "lib/audio/manager";
 import "components/window.scss";
 
 const store = createStore<State>(Store);
@@ -24,15 +25,13 @@ const tracks = [
 
 initStore(store, tracks);
 
-//const mgr = new AudioManager();
-//mgr.subscribe(store);
-const ctx = new AudioContext();
+const mgr = new AudioManager(store);
 
 ReactDOM.render(
     (
         <Provider store={store}>
             <Window>
-                <Controls.Bar context={ctx} />
+                <Controls.Bar context={mgr.context} />
                 <Instrument.Container />
             </Window>
         </Provider>

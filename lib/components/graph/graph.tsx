@@ -3,7 +3,7 @@ import * as redux from "redux";
 import { connect } from "react-redux";
 
 import { State } from "lib/state";
-import { addNode } from "components/graph/actions";
+import { addNode, startDragging, stopDragging, moveCamera } from "components/graph/actions";
 import { default as Node } from "components/graph/node";
 import { default as Edge } from "components/graph/edge";
 import { default as Anchor } from "components/graph/anchor";
@@ -12,11 +12,15 @@ import { NodeState, EdgeState, AnchorState } from "components/graph/state";
 export interface GraphProps {
     name: string;
     buildNode: (id: string) => React.ReactElement<any>;
+    dragging?: boolean;
     nodes?: Map<string, NodeState>;
     anchors?: Map<string, AnchorState>;
     edges?: Map<string, EdgeState>;
     camera?: {x: number, y: number};
     addNode?: (id: string, x: number, y: number) => void;
+    startDragging?: () => void;
+    stopDragging?: () => void;
+    moveCamera?: (dx: number, dy: number) => void;
 }
 
 const mapStore = (store: State, props: GraphProps): GraphProps => {
@@ -28,7 +32,10 @@ const mapStore = (store: State, props: GraphProps): GraphProps => {
 
 const mapDispatch = (dispatch: redux.Dispatch<State>, props: GraphProps): GraphProps => ({
     ...props,
-    addNode: (id, x, y) => dispatch(addNode(props.name, id, x, y))
+    addNode: (id, x, y) => dispatch(addNode(props.name, id, x, y)),
+    startDragging: () => dispatch(startDragging(props.name)),
+    stopDragging: () => dispatch(stopDragging(props.name)),
+    moveCamera: (dx, dy) => dispatch(moveCamera(props.name, dx, dy)),
 });
 
 @(connect(mapStore, mapDispatch) as any)
@@ -39,6 +46,19 @@ export default class Graph extends React.PureComponent<GraphProps, undefined> {
      * us to calculate the relative positions of nodes inside the graph view.
      */
     private ref: HTMLDivElement;
+
+    componentDidMount() {
+        addEventListener("mouseup", (e) => {
+            if (this.props.dragging) {
+                this.props.stopDragging();
+            }
+        });
+        addEventListener("mousemove", (e) => {
+            if (this.props.dragging) {
+                this.props.moveCamera(-e.movementX, -e.movementY);
+            }
+        });
+    }
     
     /**
      * Convert page coordinates to coordinates in the graph world.
@@ -90,6 +110,10 @@ export default class Graph extends React.PureComponent<GraphProps, undefined> {
         }
     }
 
+    private startDrag(e: React.MouseEvent<HTMLDivElement>) {
+        this.props.startDragging();
+    }
+
     /**
      * Bulid a list of elements to render by calling the buildNode() callback
      * property for each node id.
@@ -136,12 +160,18 @@ export default class Graph extends React.PureComponent<GraphProps, undefined> {
         return <div 
             className="graph"
             ref={(ref) => this.ref = ref}
-            onDragOver={(e) => this.onDragOver(e)}
-            onDrop={(e) => this.onDrop(e)} 
             style={{position: "relative"}}
         >
+        <div
+            className="mover"
+            onDragOver={(e) => this.onDragOver(e)}
+            onDrop={(e) => this.onDrop(e)} 
+            onMouseDown={(e) => this.startDrag(e)}
+            style={{position: "absolute", top: 0, left: 0, width: "100%", height: "100%"}}
+        >
             {edges}
-            {nodes}
+        </div>
+        {nodes}
         </div>
     }
 }

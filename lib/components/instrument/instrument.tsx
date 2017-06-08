@@ -74,8 +74,8 @@ export default class Instrument extends React.PureComponent<InstrumentProps, und
             this.props.changeOscillator(id, freq, amp);
         }
         return <div>
-            <Graph.Anchor direction="in" for={id} position="middle" id={id+"_in"} />
-            <Graph.Anchor direction="out" for={id} position="middle" id={id+"_out"} />
+            <Graph.Anchor direction="in" for={id} position="middle" id={id+"_in"} param="in" color="blue" />
+            <Graph.Anchor direction="out" for={id} position="middle" id={id+"_out"} param="out" color="blue" />
             <Graph.Collapsed>
                 <div className="ribbon">
                     <Graph.Dragger><i className="icon-sound-mix" /></Graph.Dragger>
@@ -114,9 +114,9 @@ export default class Instrument extends React.PureComponent<InstrumentProps, und
             this.props.changeGain(id, val);
         }
         return <div>
-            <Graph.Anchor direction="in" for={id} position="top" id={id+"_in"} />
-            <Graph.Anchor direction="in" for={id} position="bottom" id={id+"_gain"} />
-            <Graph.Anchor direction="out" for={id} position="middle" id={id+"_out"} />
+            <Graph.Anchor direction="in" for={id} position="top" id={id+"_in"} param="in" color="blue" />
+            <Graph.Anchor direction="in" for={id} position="bottom" id={id+"_gain"} param="gain" color="red" />
+            <Graph.Anchor direction="out" for={id} position="middle" id={id+"_out"} param="out" color="blue" />
             <div className="ribbon">
                 <Graph.Dragger><i className="icon-gauge" /></Graph.Dragger>
                 <Graph.Deleter><i className="icon-cross" /></Graph.Deleter>
@@ -129,7 +129,7 @@ export default class Instrument extends React.PureComponent<InstrumentProps, und
             this.props.changeNumber(id, parseFloat(e.target.value) || 0.0);
         }
         return <div>
-            <Graph.Anchor direction="out" for={id} position="middle" id={id+"_out"} />
+            <Graph.Anchor direction="out" for={id} position="middle" id={id+"_out"} param="out" color="red" />
             <div className="ribbon">
                 <Graph.Dragger><i className="icon-dial-pad" /></Graph.Dragger>
             </div>
@@ -139,7 +139,7 @@ export default class Instrument extends React.PureComponent<InstrumentProps, und
 
     private buildInput(id: string): React.ReactElement<HTMLDivElement> {
         return <div>
-            <Graph.Anchor direction="out" for={id} position="middle" id={id+"_out"} />
+            <Graph.Anchor direction="out" for={id} position="middle" id={id+"_out"} param="out" color="blue" />
             <div className="ribbon">
                 <Graph.Dragger><i className="icon-beamed-note" /></Graph.Dragger>
             </div>
@@ -148,7 +148,7 @@ export default class Instrument extends React.PureComponent<InstrumentProps, und
 
     private buildOutput(id: string): React.ReactElement<HTMLDivElement> {
         return <div>
-            <Graph.Anchor direction="in" for={id} position="middle" id={id+"_in"} />
+            <Graph.Anchor direction="in" for={id} position="middle" id={id+"_in"} param="in" color="blue" />
             <div className="ribbon">
                 <Graph.Dragger><i className="icon-controller-play" /></Graph.Dragger>
             </div>
