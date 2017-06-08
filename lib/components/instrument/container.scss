@@ -1,0 +1,32 @@
+@import '~styles/fonts';
+@import '~styles/colors';
+@import '~styles/sizes';
+
+$selected-offset: 0.75rem;
+$border-radius: 0.2rem;
+
+.instruments.tab.handles {
+
+    font: $font-size-large $font-primary;
+    background: $background-dark;
+
+    .handle span {
+        display: inline-block;
+        width: 100%;
+        text-align: center;
+        padding: $padding-large 0;
+        cursor: pointer;
+    }
+
+    .handle span.selected {
+        background: $background-light;
+        margin-top: -$selected-offset;
+        padding: ($padding-large + $selected-offset) 0;
+        border-top-left-radius: $border-radius;
+        border-top-right-radius: $border-radius;
+    }
+}
+
+.instruments.tab.page {
+    background: $background-light;
+}

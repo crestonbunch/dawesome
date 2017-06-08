@@ -1,0 +1,130 @@
+@font-face {
+  font-family: 'entypo';
+  src: url('entypo.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'entypo' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-dial-pad:before {
+  content: "\e900";
+}
+.icon-sound-mix:before {
+  content: "\e901";
+}
+.icon-gauge:before {
+  content: "\e902";
+}
+.icon-note:before {
+  content: "\e903";
+}
+.icon-beamed-note:before {
+  content: "\e904";
+}
+.icon-bar-graph:before {
+  content: "\e905";
+}
+.icon-resize-shrink:before {
+  content: "\e906";
+}
+.icon-resize-grow:before {
+  content: "\e907";
+}
+.icon-menu:before {
+  content: "\e908";
+}
+.icon-flow-line:before {
+  content: "\e909";
+}
+.icon-flow-parallel:before {
+  content: "\e90a";
+}
+.icon-flow-tree:before {
+  content: "\e90b";
+}
+.icon-flow-branch:before {
+  content: "\e90c";
+}
+.icon-flow-cascade:before {
+  content: "\e90d";
+}
+.icon-loop:before {
+  content: "\e90e";
+}
+.icon-controller-fast-backward:before {
+  content: "\e90f";
+}
+.icon-controller-fast-forward:before {
+  content: "\e910";
+}
+.icon-controller-jump-to-start:before {
+  content: "\e911";
+}
+.icon-controller-next:before {
+  content: "\e912";
+}
+.icon-controller-pause:before {
+  content: "\e913";
+}
+.icon-controller-play:before {
+  content: "\e914";
+}
+.icon-controller-record:before {
+  content: "\e915";
+}
+.icon-controller-stop:before {
+  content: "\e916";
+}
+.icon-controller-volume:before {
+  content: "\e917";
+}
+.icon-check:before {
+  content: "\e918";
+}
+.icon-cross:before {
+  content: "\e919";
+}
+.icon-plus:before {
+  content: "\e91a";
+}
+.icon-minus:before {
+  content: "\e91b";
+}
+.icon-dots-three-horizontal:before {
+  content: "\e91c";
+}
+.icon-dots-three-vertical:before {
+  content: "\e91d";
+}
+.icon-chevron-down:before {
+  content: "\e91e";
+}
+.icon-chevron-left:before {
+  content: "\e91f";
+}
+.icon-chevron-right:before {
+  content: "\e920";
+}
+.icon-chevron-up:before {
+  content: "\e921";
+}
+.icon-trash:before {
+  content: "\e922";
+}
+.icon-cog:before {
+  content: "\e923";
+}

@@ -1,4 +1,6 @@
-import { Store } from "lib/store";
+import * as redux from "redux";
+
+import { State } from "lib/state";
 import { Note } from "lib/audio/interfaces";
 import { Synth } from "lib/audio/synth";
 import { InstrumentStore } from "components/containers/instrument";
@@ -8,7 +10,7 @@ export class AudioManager {
 
     public readonly context: AudioContext;
 
-    private store: Store;
+    private store: redux.Store<State>;
     private playing: boolean = false;
     private location: number = 0.0;
 
@@ -81,7 +83,7 @@ export class AudioManager {
         this.playing = false;
     }
 
-    subscribe(store: Store) {
+    subscribe(store: redux.Store<State>) {
         this.store = store;
         this.store.subscribe(() => this.subscriber());
     }

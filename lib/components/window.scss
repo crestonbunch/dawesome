@@ -16,3 +16,7 @@ body {
     font-family: $font-mono;
     font-size: $font-size-normal;
 }
+
+[class^="icon-"], [class*=" icon-"] {
+    font-size: $font-size-normal;
+}

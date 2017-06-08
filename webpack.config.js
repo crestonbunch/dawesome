@@ -46,13 +46,14 @@ module.exports = {
 
     plugins: [
       new copy([
-        { from: 'static/index.html', to: 'dist/' },
-        { from: 'static/build/', to: 'dist/' },
+        { from: 'static/', to: 'dist/' },
         { from: 'node_modules/react/dist/react.js', to: 'dist/' },
         { from: 'node_modules/react/dist/react.min.js', to: 'dist/' },
         { from: 'node_modules/react-dom/dist/react-dom.js', to: 'dist/' },
         { from: 'node_modules/react-dom/dist/react-dom.min.js', to: 'dist/' },
+        { from: 'node_modules/redux/dist/redux.js', to: 'dist/' },
         { from: 'node_modules/redux/dist/redux.min.js', to: 'dist/' },
+        { from: 'node_modules/react-redux/dist/react-redux.js', to: 'dist/' },
         { from: 'node_modules/react-redux/dist/react-redux.min.js', to: 'dist/' },
         { from: 'node_modules/core-js/client/shim.min.js', to: 'dist/' },
       ]),

@@ -3,15 +3,15 @@ import { createStore } from "redux";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 
-import { reducer } from "lib/reducers";
-import { State, initStore } from "lib/store";
-import { AudioManager } from "lib/audio/manager";
+import { default as Store } from "lib/store";
+import { State, initStore } from "lib/state";
+//import { AudioManager } from "lib/audio/manager";
 import { Window } from "components/window";
-import { Instruments } from "components/presentational/instruments";
-import { Controls } from "components/containers/controls";
+import * as Instrument from "components/instrument";
+import * as Controls from "components/controls";
 import "components/window.scss";
 
-const store = createStore<State>(reducer);
+const store = createStore<State>(Store);
 
 // Dummy tracks until we can generate them properly
 const tracks = [
@@ -24,15 +24,16 @@ const tracks = [
 
 initStore(store, tracks);
 
-const mgr = new AudioManager();
-mgr.subscribe(store);
+//const mgr = new AudioManager();
+//mgr.subscribe(store);
+const ctx = new AudioContext();
 
 ReactDOM.render(
     (
         <Provider store={store}>
             <Window>
-                <Controls context={mgr.context} />
-                <Instruments instruments={store.getState().instruments} />
+                <Controls.Bar context={ctx} />
+                <Instrument.Container />
             </Window>
         </Provider>
     ), 
