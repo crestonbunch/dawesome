@@ -120,8 +120,8 @@ export default class Anchor extends React.PureComponent<AnchorProps, undefined> 
 
     private onDragStart(e: React.DragEvent<HTMLDivElement>) {
         const box = this.ref.getBoundingClientRect();
-        const x = e.pageX - box.left;
-        const y = e.pageY - box.top;
+        const x = (e.pageX||e.clientX) - box.left;
+        const y = (e.pageY||e.clientY) - box.top;
         const start = this.props.pageToWorld(this.absCenter.x, this.absCenter.y);
         e.dataTransfer.setData("text/for+anchor", this.props.for);
         e.dataTransfer.setData("text/param+anchor", this.props.param);
@@ -133,15 +133,15 @@ export default class Anchor extends React.PureComponent<AnchorProps, undefined> 
 
     private onDrag(e: React.DragEvent<HTMLDivElement>) {
         const box = this.ref.getBoundingClientRect();
-        const x = e.pageX - box.left;
-        const y = e.pageY - box.top;
+        const x = (e.pageX||e.clientX) - box.left;
+        const y = (e.pageY||e.clientY) - box.top;
         this.props.onDrag(x, y);
     }
 
     private onDragEnd(e: React.DragEvent<HTMLDivElement>) {
         const box = this.ref.getBoundingClientRect();
-        const x = e.pageX - box.left;
-        const y = e.pageY - box.top;
+        const x = (e.pageX||e.clientX) - box.left;
+        const y = (e.pageY||e.clientY) - box.top;
         this.props.onDrag(x, y);
         this.props.onRelease();
     }

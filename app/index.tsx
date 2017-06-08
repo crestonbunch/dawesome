@@ -23,15 +23,14 @@ const tracks = [
     [{freq: 440, start: 40.0, end: 50.0}],
 ]
 
-initStore(store, tracks);
-
 const mgr = new AudioManager(store);
+initStore(store, tracks);
 
 ReactDOM.render(
     (
         <Provider store={store}>
             <Window>
-                <Controls.Bar context={mgr.context} />
+                <Controls.Bar manager={mgr} />
                 <Instrument.Container />
             </Window>
         </Provider>

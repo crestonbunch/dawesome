@@ -84,7 +84,7 @@ export default class Edge extends React.PureComponent<EdgeProps, undefined> {
             }
             <div 
                 className="edge"
-                style={{position: "absolute", top: -height, left: -width}}
+                style={{position: "relative", top: -height, left: -width}}
             >
                 {
                     // Create a path with the start (x,y) mapped to (0,0) and the
