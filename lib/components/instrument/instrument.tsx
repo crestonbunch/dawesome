@@ -132,6 +132,7 @@ export default class Instrument extends React.PureComponent<InstrumentProps, und
             <Graph.Anchor direction="out" for={id} position="middle" id={id+"_out"} param="out" color="red" />
             <div className="ribbon">
                 <Graph.Dragger><i className="icon-dial-pad" /></Graph.Dragger>
+                <Graph.Deleter><i className="icon-cross" /></Graph.Deleter>
             </div>
             <input className="number" type="number" value={this.props.numbers.get(id)} onChange={onChange} />
         </div>
